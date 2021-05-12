@@ -69,6 +69,8 @@ node {
         ])
     }
 
+    jointConfig()
+
     // 构建镜像
     String helenaImageVersion = "helena-${module}-${runEnv}:${versionNo}"
     stage('build image') {
@@ -126,5 +128,3 @@ static def readFile (String filePath) {
         return line
     }
 }
-
-jointConfig()
