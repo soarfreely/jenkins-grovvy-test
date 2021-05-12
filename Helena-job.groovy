@@ -42,7 +42,9 @@ node {
                     $class                           : 'GitSCM',
                     branches                         : [[name: "${branch}"]],
                     doGenerateSubmoduleConfigurations: false,
-                    extensions                       : [],
+                    extensions: [
+                            [$class: 'SparseCheckoutPaths',  sparseCheckoutPaths:[[$class:'SparseCheckoutPath', path:'./ci/job/runtime/pack-dict']]]
+                    ],
                     submoduleCfg                     : [],
                     userRemoteConfigs                : [[
                                                                 credentialsId: "${pullCodeCredentialsId}",
@@ -87,7 +89,7 @@ node {
 // 配置文件内容拼接
 def jointConfig() {
     String currentDir = new File(".").getAbsolutePath()
-    String supervisordConfig = currentDir + '/supervisord.conf'
+    String supervisordConfig = currentDir + '/ci/job/runtime/supervisord.confsupervisord.conf'
 
     File dir = new File(currentDir)
 
