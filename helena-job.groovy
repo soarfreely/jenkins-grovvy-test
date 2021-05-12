@@ -15,6 +15,8 @@ def confFileName = ['gw-console']
 // 默认发布分支
 def defaultBranch='dev'
 
+def pullCodeCredentialsId='github'
+
 //部署
 node {
     properties([
