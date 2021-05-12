@@ -25,7 +25,7 @@ node {
                     choice(choices: ['gw-console', 'gw-work', 'demo'], description: '''手动修改发布的模块，标识如下：）
                 console：gw-console
                 work：gw-work
-            ''', name: 'module', trim: true)
+            ''', name: 'module')
             ])
     ])
 
