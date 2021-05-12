@@ -1,4 +1,10 @@
 
+// 镜像仓库
+def harborUri = 'harbor.vchangyi.com'
+
+// 项目名称
+def projectName='helena'
+
 def helenaProject=[
         'test':'git@github.com:soarfreely/jenkins-grovvy-test.git',
 ]
@@ -66,16 +72,7 @@ node {
     stage('build image') {
         sh """
                 cp src/.env.${runEnv} src/.env
-                docker build --no-cache -f ci/Dockerfile \
-                    -t ${harborUri}/${harborNamespace}/${helenaImageVersion} \
-                    --build-arg PROJECT_ENV="$projectEnv" \
-                    --build-arg PROJECT_GROUP="$project" \
-                    --build-arg PROJECT_MODE="$projectType" \
-                    --build-arg DB_HOST="$goCronDBHost" \
-                    --build-arg DB_PORT="$goCronDBPort" \
-                    --build-arg DB_NAME="$goCronDBName" \
-                    --build-arg DB_USER="$goCronDBUser" \
-                    --build-arg DB_PASS="$goCronDBPass" .
+                docker build --no-cache -f ci/Dockerfile-job -t ${harborUri}/${harborNamespace}/${helenaImageVersion} .
         """
     }
 

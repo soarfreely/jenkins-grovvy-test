@@ -6,9 +6,8 @@ ENV DB_PORT 3306
 ENV DB_NAME demo
 ENV DB_USER root
 ENV DB_PASS root
-ENV PROJECT_GROUP console
 
-RUN mkdir -p /data/www/storage/${PROJECT_ENV}-logs \
+RUN mkdir -p /data/www/storage/test/job-logs \
 	&& mkdir -p /etc/supervisor
 
 COPY ./runtime/pack-dict /data/www
