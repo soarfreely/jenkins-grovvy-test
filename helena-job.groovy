@@ -6,11 +6,11 @@ def harborUri = 'harbor.vchangyi.com'
 def projectName='helena'
 
 def helenaProject=[
-        'test':'git@github.com:soarfreely/jenkins-grovvy-test.git',
+        'gw-console':'git@github.com:soarfreely/jenkins-grovvy-test.git',
 ]
 
 // 配置的文件名
-def confFileName = ['gw-console', 'gw-shop', 'micro-activity', ' micro-activity.conf']
+def confFileName = ['gw-console']
 
 // 默认发布分支
 def defaultBranch='dev'
@@ -36,7 +36,7 @@ node {
     ])
 
     // 拉取业务代码
-    for (repository in helenaProject) {
+    for (repository in confFileName) {
         stage('scm') {
             checkout([
                     $class                           : 'GitSCM',
@@ -48,7 +48,7 @@ node {
                     submoduleCfg                     : [],
                     userRemoteConfigs                : [[
                                                                 credentialsId: "${pullCodeCredentialsId}",
-                                                                url          : repository.value
+                                                                url          : helenaProject["${repository}"]
                                                         ]]
             ])
         }
@@ -75,8 +75,7 @@ node {
     String helenaImageVersion = "helena-${module}-${runEnv}:${versionNo}"
     stage('build image') {
         sh """
-                cp src/.env.${runEnv} src/.env
-                docker build --no-cache -f ci/Dockerfile-job -t ${harborUri}/${harborNamespace}/${helenaImageVersion} .
+                docker build --no-cache -f ci/job/Dockerfile -t ${harborUri}/${harborNamespace}/${helenaImageVersion} .
         """
     }
 
